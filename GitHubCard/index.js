@@ -99,7 +99,7 @@ function profileMaker(profileObj){
       userInfo.appendChild(userFollowing);
       userInfo.appendChild(userBio);
       userProfile.appendChild(userTag);
-      console.log (userTag)
+
 
         profileDiv.classList.add("card");
         userInfo.classList.add("card-info");
@@ -110,13 +110,13 @@ function profileMaker(profileObj){
           userHeader.textContent = profileObj.name
           userName.textContent = profileObj.login
           userLocation.textContent =`Location: ${profileObj.location}`
-          userProfile.textContent = `Profile: ` 
+          userProfile.textContent = `Profile: ${profileObj.html_url}` 
           userFollower.textContent = `Followers: ${profileObj.followers}`
           userFollowing.textContent = `Following:  ${profileObj.following}`
           userBio.textContent = `Bio: ${profileObj.bio}`
           userTag.textContent = `GitHub Profile`
           userTag.setAttribute("href", profileObj.html_url)
-
+         
 
 return profileDiv;
 }
