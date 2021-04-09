@@ -3,7 +3,46 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from "axios";
 
+axios
+  .get("https://api.github.com/users/seyeonigbinde")
+  .then((res) => {
+    console.log(`Response:`, res.data);
+    const newCard = profileMaker(res.data);
+    profiles.appendChild(newCard);
+    console.log(newCard);
+    // profiles.forEach((profileMes) => {
+    //     const profileGit = profileMaker (profileMes);
+    //     console.log(profileGit);
+    //     profiles.appendChild(profileGit);
+
+    // });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  // axios
+  // .get("https://dog.ceo/api/breed/spaniel/images/random/9")
+  // .then((res) => {
+  //   // console.log("RESPONSE, i.e. 'res': \n \n", res);
+  //   // console.log("res.data: \n \n", res.data);
+  //   // console.log("IMAGES: \n \n", res.data.message);
+  //   const images = res.data.message;
+
+  //   images.forEach((image) => {
+  //     const doggieCard = dogCardMaker({ imageURL: image, breed: "spaniel" });
+  //     console.log(doggieCard);
+  //     entryPoint.appendChild(doggieCard);
+  //   });
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // })
+  // .finally(() => {
+  //   console.log('done')
+  // })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -28,7 +67,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = profileMaker(["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"]);
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +88,59 @@ const followersArray = [];
       </div>
     </div>
 */
+
+const profiles = document.querySelector(".cards");
+function profileMaker(profileObj){
+    const profileDiv = document.createElement("div");
+    const userImage = document.createElement("img");
+    const userInfo = document.createElement("div");
+    const userHeader = document.createElement("h3");
+    const userName = document.createElement("p");
+    const userLocation = document.createElement("p");
+    const userProfile = document.createElement("p");
+    const userTag = document.createElement("a");
+    const userFollower = document.createElement("p");
+    const userFollowing = document.createElement("p");
+    const userBio = document.createElement("p");
+
+      profileDiv.appendChild(userImage);
+      profileDiv.appendChild(userInfo);
+      userInfo.appendChild(userHeader);
+      userInfo.appendChild(userName);
+      userInfo.appendChild(userLocation);
+      userInfo.appendChild(userProfile);
+      userInfo.appendChild(userFollower);
+      userInfo.appendChild(userFollowing);
+      userInfo.appendChild(userBio);
+      userProfile.appendChild(userTag);
+
+
+        profileDiv.classList.add("card");
+        userInfo.classList.add("card-info");
+        userHeader.classList.add("name");
+        userName.classList.add("username");
+
+          userImage.src = profileObj.avatar_url
+          userHeader.textContent = profileObj.name
+          userName.textContent = profileObj.login
+          userLocation.textContent =`Location: ${profileObj.location}`
+          userProfile.textContent = `Profile: ` + `GitHub Profile`
+          userFollower.textContent = `Followers: ${profileObj.followers}`
+          userFollowing.textContent = `Following:  ${profileObj.following}`
+          userBio.textContent = `Bio: ${profileObj.bio}`
+          userTag.textContent = `GitHub Profile`
+          userTag.setAttribute("href", `${profileObj.html_url}`)
+
+
+return profileDiv;
+}
+
+//Step 4
+// followersArray.forEach((articleObj) => {
+//   const profileDiv = profileMaker(articleObj);
+//   return profiles.appendChild(profileDiv);
+// });
+
 
 /*
   List of LS Instructors Github username's:
