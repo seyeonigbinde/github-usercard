@@ -3,6 +3,31 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from "axios";
+
+
+const profiles = document.querySelector(".cards");
+const followersArray = ["https://api.github.com/users/seyeonigbinde",
+"https://api.github.com/users/tetondan",
+"https://api.github.com/users/dustinmyers",
+"https://api.github.com/users/justsml",
+"https://api.github.com/users/luishrd",
+"https://api.github.com/users/bigknell"];
+
+followersArray.forEach((gitName) => {
+            axios.get(gitName)
+            .then((res) => {
+              const newCard = profileMaker(res.data);
+              profiles.appendChild(newCard);
+              console.log(newCard);
+          
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        })
+      
+// 
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,8 +53,8 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
+     
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -49,6 +74,53 @@ const followersArray = [];
       </div>
     </div>
 */
+
+
+function profileMaker(profileObj){
+    const profileDiv = document.createElement("div");
+    const userImage = document.createElement("img");
+    const userInfo = document.createElement("div");
+    const userHeader = document.createElement("h3");
+    const userName = document.createElement("p");
+    const userLocation = document.createElement("p");
+    const userProfile = document.createElement("p");
+    const userTag = document.createElement("a");
+    const userFollower = document.createElement("p");
+    const userFollowing = document.createElement("p");
+    const userBio = document.createElement("p");
+
+      profileDiv.appendChild(userImage);
+      profileDiv.appendChild(userInfo);
+      userInfo.appendChild(userHeader);
+      userInfo.appendChild(userName);
+      userInfo.appendChild(userLocation);
+      userInfo.appendChild(userProfile);
+      userInfo.appendChild(userFollower);
+      userInfo.appendChild(userFollowing);
+      userInfo.appendChild(userBio);
+      userProfile.appendChild(userTag);
+
+
+        profileDiv.classList.add("card");
+        userInfo.classList.add("card-info");
+        userHeader.classList.add("name");
+        userName.classList.add("username");
+
+          userImage.src = profileObj.avatar_url
+          userHeader.textContent = profileObj.name
+          userName.textContent = profileObj.login
+          userLocation.textContent =`Location: ${profileObj.location}`
+          userProfile.textContent = `Profile: ${profileObj.html_url}` 
+          userFollower.textContent = `Followers: ${profileObj.followers}`
+          userFollowing.textContent = `Following:  ${profileObj.following}`
+          userBio.textContent = `Bio: ${profileObj.bio}`
+          userTag.textContent = `GitHub Profile`
+          userTag.setAttribute("href", profileObj.html_url)
+         
+
+return profileDiv;
+}
+
 
 /*
   List of LS Instructors Github username's:
