@@ -5,44 +5,30 @@
 */
 import axios from "axios";
 
-axios
-  .get("https://api.github.com/users/seyeonigbinde")
-  .then((res) => {
-    console.log(`Response:`, res.data);
-    const newCard = profileMaker(res.data);
-    profiles.appendChild(newCard);
-    console.log(newCard);
-    // profiles.forEach((profileMes) => {
-    //     const profileGit = profileMaker (profileMes);
-    //     console.log(profileGit);
-    //     profiles.appendChild(profileGit);
 
-    // });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const profiles = document.querySelector(".cards");
+const followersArray = ["https://api.github.com/users/seyeonigbinde",
+"https://api.github.com/users/tetondan",
+"https://api.github.com/users/dustinmyers",
+"https://api.github.com/users/justsml",
+"https://api.github.com/users/luishrd",
+"https://api.github.com/users/bigknell"];
 
-  // axios
-  // .get("https://dog.ceo/api/breed/spaniel/images/random/9")
-  // .then((res) => {
-  //   // console.log("RESPONSE, i.e. 'res': \n \n", res);
-  //   // console.log("res.data: \n \n", res.data);
-  //   // console.log("IMAGES: \n \n", res.data.message);
-  //   const images = res.data.message;
+followersArray.forEach((gitName) => {
+            axios.get(gitName)
+            .then((res) => {
+              const newCard = profileMaker(res.data);
+              profiles.appendChild(newCard);
+              console.log(newCard);
+          
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        })
+      
+// 
 
-  //   images.forEach((image) => {
-  //     const doggieCard = dogCardMaker({ imageURL: image, breed: "spaniel" });
-  //     console.log(doggieCard);
-  //     entryPoint.appendChild(doggieCard);
-  //   });
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
-  // .finally(() => {
-  //   console.log('done')
-  // })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -67,8 +53,8 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = profileMaker(["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"]);
 
+     
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -89,7 +75,7 @@ const followersArray = profileMaker(["tetondan", "dustinmyers", "justsml", "luis
     </div>
 */
 
-const profiles = document.querySelector(".cards");
+
 function profileMaker(profileObj){
     const profileDiv = document.createElement("div");
     const userImage = document.createElement("img");
@@ -113,7 +99,7 @@ function profileMaker(profileObj){
       userInfo.appendChild(userFollowing);
       userInfo.appendChild(userBio);
       userProfile.appendChild(userTag);
-
+      console.log (userTag)
 
         profileDiv.classList.add("card");
         userInfo.classList.add("card-info");
@@ -124,22 +110,16 @@ function profileMaker(profileObj){
           userHeader.textContent = profileObj.name
           userName.textContent = profileObj.login
           userLocation.textContent =`Location: ${profileObj.location}`
-          userProfile.textContent = `Profile: ` + `GitHub Profile`
+          userProfile.textContent = `Profile: ` 
           userFollower.textContent = `Followers: ${profileObj.followers}`
           userFollowing.textContent = `Following:  ${profileObj.following}`
           userBio.textContent = `Bio: ${profileObj.bio}`
           userTag.textContent = `GitHub Profile`
-          userTag.setAttribute("href", `${profileObj.html_url}`)
+          userTag.setAttribute("href", profileObj.html_url)
 
 
 return profileDiv;
 }
-
-//Step 4
-// followersArray.forEach((articleObj) => {
-//   const profileDiv = profileMaker(articleObj);
-//   return profiles.appendChild(profileDiv);
-// });
 
 
 /*
